@@ -10,24 +10,6 @@ export type UserType = {
   avatar: string
 }
 
-// export type UserAbility = {
-//   ability: {
-//     name: string
-//     url: string
-//   }
-// }
-
-// export type UserSprites = {
-//   front_default: string
-// }
-
-// export type UserStat = {
-//   base_stat: number,
-//   stat: {
-//     name: string
-//   }
-// }
-
 export interface UserLoading {
   type: typeof USER_LOADING
   payload: []
@@ -35,7 +17,7 @@ export interface UserLoading {
 
 export interface UserFail {
   type: typeof USER_FAIL,
-  payload: any
+  payload: string
 }
 
 export interface UserSuccess {

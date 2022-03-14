@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetUser } from "./actions/UserActions";
 import { UserType } from "./actions/UserActionTypes";
 import UserPagination from "./components/UserPagination/UserPagination";
-import { RootStore } from "./store";
+import { UserStore } from "./store";
+import Heading from "./components/Heading/Heading";
+import UserList from "./components/UserList/UserList";
+import UserProfile from "./components/UserProfile/Userprofile";
 
 export interface DataType {
   selected: number;
@@ -12,74 +15,52 @@ export interface DataType {
 
 function App() {
   const dispatch = useDispatch();
-  const userState = useSelector((state: RootStore) => state.users);
-  const [userdata, setUserData] = useState<UserType[] | [] | undefined>([]);
+  const userState = useSelector((state: UserStore) => state);
+  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
   const [pagenum, setPageNum] = useState(1);
-  console.log("user state:", userState);
   const handlePageClick = (data: DataType) => {
     setPageNum(data.selected + 1);
   };
 
-  useEffect(() => {
-    console.log("number is", pagenum);
-    dispatch(GetUser(pagenum));
+  const handleHover = (id: number) => {
     if (userState.users) {
-      setUserData(userState.users);
+      const selectedUserInfo = userState.users.find((user) => user.id === id);
+      if (selectedUserInfo) {
+        setSelectedUser(selectedUserInfo);
+      }
     }
-  }, [pagenum]);
+  };
 
+  const handleMouseLeave = () => {
+    setSelectedUser(null);
+  };
+
+  const profile_info = selectedUser !== null && (
+    <UserProfile selectedUser={selectedUser} />
+  );
   useEffect(() => {
-    setUserData(userState.users);
-  }, []);
+    dispatch(GetUser(pagenum));
+  }, [pagenum, dispatch]);
   return (
     <div className="App">
-      <ul>
-        {userState.loading ? (
-          <li>Loading</li>
-        ) : userdata ? (
-          userdata.map((user) => {
-            return <li key={user.id}>{user.first_name}</li>;
-          })
-        ) : (
-          <li>Not found</li>
-        )}
-      </ul>
-      <div className="pagination-container">
-        <UserPagination handlePageClick={handlePageClick} />
+      <div className="container">
+        <div className="app-wrapper">
+          <div className="left-block">
+            <Heading />
+            <UserList
+              pagenum={pagenum}
+              handleHover={handleHover}
+              handleMouseLeave={handleMouseLeave}
+            />
+          </div>
+          <div className="right-block">{profile_info}</div>
+        </div>
+        <div className="pagination-container">
+          <UserPagination handlePageClick={handlePageClick} />
+        </div>
       </div>
     </div>
   );
 }
 
 export default App;
-
-{
-  /* <div className="pagination-container">
-        <UserPagination handlePageClick={handlePageClick} />
-      </div> */
-}
-
-// return (
-//   <div className="App">
-
-//         <ul>
-//           {userState.loading ? (
-//             <p>Loading</p>
-//           ) : userState.users ? (
-//             userState.users.map((user) => {
-//               return user !== null ? (
-//                 <li key={user.id}>{user.first_name}</li>
-//               ) : (
-//                 <p>No data found</p>
-//               );
-//             })
-//           ) : (
-//             <p>Not found</p>
-//           )}
-//         </ul>
-//       </div>
-//     )}
-//     {/* {!userState.loading && <ul>{userState.map(user)}</ul>} */}
-
-//   </div>
-// );
