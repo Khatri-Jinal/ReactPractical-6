@@ -1,7 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetUser } from "./actions/UserActions";
+import { getUser } from "./actions/UserActions";
 import { UserType } from "./actions/UserActionTypes";
 import UserPagination from "./components/UserPagination/UserPagination";
 import { UserStore } from "./store";
@@ -39,7 +39,7 @@ function App() {
     <UserProfile selectedUser={selectedUser} />
   );
   useEffect(() => {
-    dispatch(GetUser(pagenum));
+    dispatch(getUser(pagenum));
   }, [pagenum, dispatch]);
   return (
     <div className="App">

@@ -22,15 +22,18 @@ const userReducer = (state: DefaultStateI = defaultState, action: UserDispatchTy
     switch (action.type) {
         case USER_FAIL:
             return {
+                ...state,
                 loading: false,
                 error: action.payload
             }
         case USER_LOADING:
             return {
-                loading: true,
+                ...state,
+                loading: true
             }
         case USER_SUCCESS:
             return {
+                ...state,
                 loading: false,
                 users: action.payload
             }

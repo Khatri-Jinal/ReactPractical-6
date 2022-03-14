@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GetUser } from "../../actions/UserActions";
+import { useSelector } from "react-redux";
 import { UserStore } from "../../store";
 import User from "../User/User";
 import "./UserList.css";
@@ -16,32 +14,28 @@ function UserList({
   handleHover,
   handleMouseLeave,
 }: UserListPropTypes) {
-  const dispatch = useDispatch();
   const userState = useSelector((state: UserStore) => state);
+  if (userState.loading) {
+    return <div className="loader"></div>;
+  }
 
-  useEffect(() => {
-    dispatch(GetUser(pagenum));
-  }, [pagenum, dispatch]);
+  if (userState.error) {
+    return <p style={{ color: "red" }}>{userState.error}</p>;
+  }
 
   return (
     <>
       <div>
-        {userState.loading ? (
-          <div className="loader"></div>
-        ) : userState.users ? (
-          userState.users.map((user) => {
-            return (
-              <User
-                key={user.id}
-                {...user}
-                handleHover={handleHover}
-                handleMouseLeave={handleMouseLeave}
-              />
-            );
-          })
-        ) : (
-          <p style={{ color: "red" }}>{userState.error}</p>
-        )}
+        {userState.users?.map((user) => {
+          return (
+            <User
+              key={user.id}
+              {...user}
+              handleHover={handleHover}
+              handleMouseLeave={handleMouseLeave}
+            />
+          );
+        })}
       </div>
     </>
   );

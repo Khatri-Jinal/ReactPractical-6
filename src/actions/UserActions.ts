@@ -14,7 +14,7 @@ interface ResponseDataType {
   }
 }
 
-export const GetUser = (pn: number) => {
+export const getUser = (pn: number) => {
   return function (dispatch: Dispatch<UserDispatchTypes>) {
     dispatch({
       type: USER_LOADING,
