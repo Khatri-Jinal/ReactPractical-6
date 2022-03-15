@@ -1,16 +1,27 @@
 import { Dispatch } from "redux";
-import { USER_FAIL, USER_LOADING, USER_SUCCESS, UserDispatchTypes } from "./UserActionTypes";
+import { USER_FAIL, USER_LOADING, USER_SUCCESS, UserDispatchTypes, UserType } from "./UserActionTypes";
 import axios from "axios";
 
-export const GetUser = (pn: number) => {
+interface ResponseDataType {
+  data: UserType[],
+  page: number,
+  per_page: number,
+  total: number,
+  total_pages: number,
+  support: {
+    text: string
+    url: string
+  }
+}
+
+export const getUser = (pn: number) => {
   return function (dispatch: Dispatch<UserDispatchTypes>) {
     dispatch({
       type: USER_LOADING,
       payload: []
-
     })
     axios
-      .get(`https://reqres.in/api/users?page=${pn}`)
+      .get<ResponseDataType>(`https://reqres.in/api/users?page=${pn}`)
       .then((response) => {
         dispatch({
           type: USER_SUCCESS,

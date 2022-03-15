@@ -88,7 +88,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+/* HTML5 display-role reset */
 article,
 aside,
 details,
@@ -105,6 +105,7 @@ section {
 body {
   line-height: 1;
   font-family: "Roboto";
+  background-color: #f6f5f8;
 }
 ol,
 ul {
@@ -125,17 +126,22 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+a {
+  cursor: pointer;
+}
 
+/*app */
 .app-wrapper {
   display: flex;
+  min-height: 536px;
 }
 .left-block {
-  flex: 0 0 70%;
-  max-width: 70%;
+  flex: 0 0 75%;
+  max-width: 75%;
 }
 .right-block {
-  flex: 0 0 30%;
-  max-width: 30%;
+  flex: 0 0 25%;
+  max-width: 25%;
 }
 .container {
   max-width: 1200px;

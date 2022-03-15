@@ -8,17 +8,17 @@ interface UserProfileProptypes {
 function UserProfile({ selectedUser }: UserProfileProptypes) {
   return (
     <div className="user-profile">
-      {/* <div className="user-top">
+      <div className="user-top">
         <div className="user-img">
           <img
             className="profile-photo"
-            src={selectedUser?.image}
+            src={selectedUser?.avatar}
             alt={"user"}
           />
         </div>
         <h4 className="name">
-          {selectedUser?.name}
-          {selectedUser?.status === "Active" && <span className="dot"></span>}
+          {selectedUser?.first_name} {selectedUser?.last_name}
+          {selectedUser?.id === 1 && <span className="dot"></span>}
         </h4>
         <p className="email">{selectedUser?.email}</p>
         <p className="plan">Your Plan: Standard</p>
@@ -36,7 +36,7 @@ function UserProfile({ selectedUser }: UserProfileProptypes) {
             <p className="title">Monthly clicks</p>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

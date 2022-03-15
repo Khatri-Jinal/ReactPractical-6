@@ -5,47 +5,55 @@ import "react-dropdown/style.css";
 import { Lock, Trash2 } from "react-feather";
 
 interface UserProps {
+  key: number;
   id: number;
-  name: string;
-  status: "Active" | "Inactive";
-  access: "Owner" | "Manager" | "Read";
-  symbol: "Lock" | "Bin";
+  first_name: string;
+  last_name: string;
   email: string;
-  image: string;
+  avatar: string;
   handleHover: (id: number) => void;
   handleMouseLeave: () => void;
 }
 
 function User({
   id,
-  name,
   email,
-  image,
-  status,
-  access,
+  first_name,
+  last_name,
+  avatar,
   handleHover,
-  symbol,
   handleMouseLeave,
 }: UserProps) {
   const options = ["Active", "Inactive"];
-  const currentStatus =
-    status === "Active" ? (
-      <p style={{ color: "green" }}>{status}</p>
-    ) : (
-      <Dropdown options={options} value={status} />
-    );
 
   const accessOptions = ["Manager", "Read"];
 
-  const currentAccess =
-    access === "Owner" ? (
-      <p>{access}</p>
+  const name = first_name + " " + last_name;
+  const currentStatus =
+    id === 1 ? (
+      <p style={{ color: "green" }}>Active</p>
     ) : (
-      <Dropdown options={accessOptions} value={access} />
+      <Dropdown options={options} value="Inactive" />
     );
 
-  const sym = symbol === "Lock" ? <Lock /> : <Trash2 />;
+  const currentAccess =
+    id === 1 ? (
+      <p>Owner</p>
+    ) : (
+      <Dropdown options={accessOptions} value="Manager" />
+    );
 
+  const currentSymbol =
+    id === 1 ? (
+      <p>
+        <Lock />
+      </p>
+    ) : (
+      <p>
+        {" "}
+        <Trash2 />
+      </p>
+    );
   return (
     <div
       className="user"
@@ -53,11 +61,11 @@ function User({
       onMouseLeave={handleMouseLeave}
     >
       <div className="user-info">
-        <UserInfo name={name} email={email} image={image} />
+        <UserInfo name={name} email={email} image={avatar} />
       </div>
       <div className="status">{currentStatus}</div>
       <div className="access">{currentAccess}</div>
-      <div className="symbol">{sym}</div>
+      <div className="symbol">{currentSymbol}</div>
     </div>
   );
 }

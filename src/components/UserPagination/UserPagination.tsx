@@ -1,16 +1,12 @@
 import ReactPaginate from "react-paginate";
 import { DataType } from "../../App";
 import "./UserPagination.css";
+
 interface UserPaginationPropTypes {
-  // pagenum: number | undefined;
-  // setPageNum: (arg: number) => void;
   handlePageClick: (data: DataType) => void;
 }
-function UserPagination({
-  // pagenum,
-  // setPageNum,
-  handlePageClick,
-}: UserPaginationPropTypes) {
+
+function UserPagination({ handlePageClick }: UserPaginationPropTypes) {
   return (
     <div>
       <ReactPaginate
